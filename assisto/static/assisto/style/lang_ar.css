@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&display=swap');
+
+
+.container {
+  direction: rtl ;
+  text-align: right ;
+}
+
+
+.container header img {
+    margin-right: 1.7rem ;
+}
+
+.container header .left span {
+    margin-right: 1rem ;
+}
+
+.container header .status, .container main .msg, .container header .boot-name  {
+    font-family: 'Noto Sans Arabic', sans-serif;
+}
+
+.container footer .Message-input{
+     direction: ltr;
+}
+
+.container header::after {
+    right: 5rem ;
+}
+
+.container .right .lang:link, .container .right .lang:visited {
+    font-family: 'Roboto', sans-serif;
+     margin-left: 1.7rem ;
+}
+
+.container header .right {
+    margin-left: 1.7rem ;
+}
+
+.container footer .Sd {
+    rotate: 180deg ;
+}
+
+.container main .boot-msg {
+    border-radius: 1.2rem 1.2rem 0 1.2rem;
+}
+
+.container main .user-msg {
+  border-radius: 1.2rem 1.2rem 1.2rem 0 ;
+}
+
+.container main .boot-msg .boot-date {
+  left: -1.8rem;
+}
+
+.container main .user-msg .user-date {
+  right: -1.6rem;
+}
+
+.pdf-logo {
+  margin-left: 1.5rem;
+}
+
+.file-download .file-name {
+    direction: ltr;
+    text-align: left;
+}
+
+.file-download .download-logo{
+    margin-right: 1.5rem;
+}
+
+.scroll-down-button {
+    left: 2rem;
+}

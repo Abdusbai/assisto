@@ -1,0 +1,47 @@
+.container header img {
+    margin-left: 1.7rem;
+}
+
+.container header .left span {
+    margin-left: 1rem;
+}
+
+.container header::after {
+    left: 5rem;
+}
+
+.container .right .lang:link, .container .right .lang:visited {
+    margin-right: 1.7rem;
+}
+
+.container header .right {
+  margin-right: 1.7rem;
+}
+
+.container main .boot-msg {
+      border-radius: 1.2rem 1.2rem 1.2rem 0;
+}
+
+.container main .user-msg {
+  border-radius: 1.2rem 1.2rem 0 1.2rem;
+}
+
+.container main .boot-msg .boot-date {
+  right: -1.8rem;
+}
+
+.container main .user-msg .user-date {
+  left: -1.6rem;
+}
+
+.pdf-logo {
+  margin-right: 1.5rem;
+}
+
+.file-download .download-logo{
+    margin-left: 1.5rem;
+}
+
+.scroll-down-button {
+    right: 2rem;
+}

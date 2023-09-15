@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css_files %}
+    <link rel="stylesheet" href="{% static "assisto/style/app.css" %}">
+    <link rel="stylesheet" href="{% static "assisto/style/lang_ar.css" %}">
+{% endblock %}
+{% block title %}
+    <title>أسيستو - روبوت الدردشة التابع للغرفة الفلاحية لجهة الشرق</title>
+{% endblock %}
+
+{% block content %}
+    <script>
+        let staticURL = "{% static 'uploads' %}";
+    </script>
+    <div class="container">
+        <header>
+          <span class="left">
+            <img src="{% static "assisto/img/1955098.png" %}" alt="chatbot logo">
+            <span>
+              <p class="boot-name">أسيستو</p>
+              <p class="status">متصل</p>
+            </span>
+          </span>
+          <span class="right">
+              <a href="{% url "assisto" %}" class="lang">Français</a>
+                <button class="btn-dark-light" aria-label="theme switcher">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon-ld" name="show" viewBox="0 0 512 512">
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32"
+                          d="M256 48v48M256 416v48M403.08 108.92l-33.94 33.94M142.86 369.14l-33.94 33.94M464 256h-48M96 256H48M403.08 403.08l-33.94-33.94M142.86 142.86l-33.94-33.94"></path>
+                    <circle cx="256" cy="256" r="80" fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-miterlimit="10"></circle>
+                  </svg>
+
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon-ld" name="hide" viewBox="0 0 512 512">
+                    <path
+                            d="M160 136c0-30.62 4.51-61.61 16-88C99.57 81.27 48 159.32 48 248c0 119.29 96.71 216 216 216 88.68 0 166.73-51.57 200-128-26.39 11.49-57.38 16-88 16-119.29 0-216-96.71-216-216z"
+                            fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </button>
+          </span>
+        </header>
+        <main id="chatbot">
+            <div class="scroll-down-button">
+                <button class="scroll-btn" aria-label="scroll down button">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="scroll-icon" viewBox="0 0 512 512">
+                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                              stroke-width="48"
+                              d="M112 184l144 144 144-144"></path>
+                    </svg>
+                </button>
+            </div>
+        </main>
+
+        <footer>
+            <input type="text" class="Message-input" id="textInput" placeholder="أكتب رسالة" name="user-message" aria-label="message input">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="Att">
+                    <input type="file" id="fileInput" accept=".pdf" name="fileInput" aria-label="file input">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="Attach-icon" viewBox="0 0 512 512">
+                        <path
+                                d="M216.08 192v143.85a40.08 40.08 0 0080.15 0l.13-188.55a67.94 67.94 0 10-135.87 0v189.82a95.51 95.51 0 10191 0V159.74"
+                                fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"></path>
+                    </svg>
+                </div>
+            </form>
+
+            <button type="submit" class="Sd" id="button-input" aria-label="send button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="Send-icon" viewBox="0 0 512 512">
+                    <path
+                            d="M470.3 271.15L43.16 447.31a7.83 7.83 0 01-11.16-7V327a8 8 0 016.51-7.86l247.62-47c17.36-3.29 17.36-28.15 0-31.44l-247.63-47a8 8 0 01-6.5-7.85V72.59c0-5.74 5.88-10.26 11.16-8L470.3 241.76a16 16 0 010 29.39z"
+                            fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </button>
+        </footer>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static "assisto/script/jQuery_ar.js" %}"></script>
+{% endblock %}

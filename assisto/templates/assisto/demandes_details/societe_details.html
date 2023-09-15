@@ -1,0 +1,169 @@
+{% extends "home.html" %}
+{% load static %}
+{% block right_content %}
+    <div class="page-header">
+        <div>
+            <h1 class="Header-primary">Détails</h1>
+            <p class="Header-navigation"><a href="{% url "dashboard" %}">Accueil</a>&nbsp; / &nbsp;<a
+                    href="{% url "societe_demande" %}">Société</a>&nbsp; / &nbsp;Détails</p>
+        </div>
+    </div>
+    <div class="page-content">
+        <div class="page-content-group">
+            <span class="group-title">Informations personnelles et coordonnées :</span>
+            <div class="gro-info">
+                <span class="title-sm">N° RC :</span>
+                <span class="info">{{ societe.rc_num|upper }}</span>
+            </div>
+            <div class="gro-info">
+                <span class="title-sm">N° RC (PDF) :</span>
+                <a href="/static/uploads{{ societe.rc_pdf.url }}" class="info" target="_blank">Afficher le PDF</a>
+            </div>
+            <div class="gro-info">
+                <span class="title-sm">Nom :</span>
+                <span class="info">{{ societe.rc_num.user_nom|upper }}</span>
+            </div>
+            <div class="gro-info">
+                <span class="title-sm">Nom et prénom du gérant :</span>
+                <span class="info">{{ societe.nom_gerant|upper }}</span>
+            </div>
+            <div class="gro-info">
+                <span class="title-sm">Téléphone :</span>
+                <span class="info">{{ societe.rc_num.user_tel }}</span>
+            </div>
+            <div class="gro-info">
+                <span class="title-sm">E-mail :</span>
+                <span class="info">{{ societe.rc_num.user_email }}</span>
+            </div>
+            <div class="gro-info">
+                <span class="title-sm">Province :</span>
+                <span class="info">{{ societe.rc_num.commune.province|upper }}</span>
+            </div>
+            <div class="gro-info">
+                <span class="title-sm">Commune :</span>
+                <span class="info">{{ societe.rc_num.commune|upper }}</span>
+            </div>
+
+        </div>
+        <div class="page-content-group">
+            <span class="group-title">Activités professionnelles :</span>
+            {% if societe.rc_num.profession %}
+                <div class="gro-info">
+                    <span class="title-sm">Type de profession :</span>
+                    <span class="info">{{ societe.rc_num.profession|upper }}</span>
+                </div>
+            {% endif %}
+
+            {% if societe.rc_num.proof %}
+                <div class="gro-info">
+                    <span class="title-sm">Justificatif disponible :</span>
+                    <span class="info">{{ societe.rc_num.proof|upper }}</span>
+                </div>
+            {% endif %}
+
+            {% if pdf_file %}
+                <div class="gro-info">
+                    <span class="title-sm">Justificatif disponible (PDF) :</span>
+                    <a href="/static/uploads{{ pdf_file }}" class="info" target="_blank">Afficher le PDF</a>
+                </div>
+            {% endif %}
+
+            {% if num_tf %}
+                <div class="gro-info">
+                    <span class="title-sm">N° du titre foncier (T.F) :</span>
+                    <span class="info">{{ num_tf|upper }}</span>
+                </div>
+            {% endif %}
+
+            {% if num_refe %}
+                <div class="gro-info">
+                    <span class="title-sm">N° de référence :</span>
+                    <span class="info">{{ num_refe|upper }}</span>
+                </div>
+            {% endif %}
+
+            {% if p_date %}
+                <div class="gro-info">
+                    <span class="title-sm">Date :</span>
+                    <span class="info">{{ p_date|date:"d/m/Y" }}</span>
+                </div>
+            {% endif %}
+
+            {% if days %}
+                <div class="gro-info">
+                    <span class="title-sm">Durée :</span>
+                    <span class="info">{{ days }} jours</span>
+                </div>
+            {% endif %}
+
+            {% if nom %}
+                <div class="gro-info">
+                    <span class="title-sm">Nom :</span>
+                    <span class="info">{{ nom|upper }}</span>
+                </div>
+            {% endif %}
+
+            {% if nom_prenom_president %}
+                <div class="gro-info">
+                    <span class="title-sm">Nom complet du président de la coopérative :</span>
+                    <span class="info">{{ nom_prenom_president|upper }}</span>
+                </div>
+            {% endif %}
+
+            {% if tele %}
+                <div class="gro-info">
+                    <span class="title-sm">Téléphone :</span>
+                    <span class="info">{{ tele }}</span>
+                </div>
+            {% endif %}
+
+            {% if email %}
+                <div class="gro-info">
+                    <span class="title-sm">E-mail :</span>
+                    <span class="info">{{ email|upper }}</span>
+                </div>
+            {% endif %}
+
+            {% if province %}
+                <div class="gro-info">
+                    <span class="title-sm">Province :</span>
+                    <span class="info">{{ province|upper }}</span>
+                </div>
+            {% endif %}
+
+            {% if commune %}
+                <div class="gro-info">
+                    <span class="title-sm">Commune :</span>
+                    <span class="info">{{ commune|upper }}</span>
+                </div>
+            {% endif %}
+        </div>
+        <div class="page-content-group">
+            <span class="group-title">Message (facultatif) :</span>
+            <textarea class="message-area" id="myTextarea"></textarea>
+            <div class="char-count">Caractères restants: <span id="charRemaining">200</span></div>
+        </div>
+        <div class="page-content-group-buttons">
+            <a href="{% url "accepter_refuser_demande" "societe" societe.rc_num "accepter" %}" class="form-btn green" id="accepterBtn">
+                <svg clip-rule="evenodd" class="icon icon-update" fill-rule="evenodd" stroke-linejoin="round"
+                     stroke-miterlimit="2"
+                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="m2.25 12.321 7.27 6.491c.143.127.321.19.499.19.206 0 .41-.084.559-.249l11.23-12.501c.129-.143.192-.321.192-.5 0-.419-.338-.75-.749-.75-.206 0-.411.084-.559.249l-10.731 11.945-6.711-5.994c-.144-.127-.322-.19-.5-.19-.417 0-.75.336-.75.749 0 .206.084.412.25.56"
+                          fill-rule="nonzero"></path>
+                </svg>
+                Accepter
+            </a>
+            <a href="{% url "accepter_refuser_demande" "societe" societe.rc_num "refuser" %}" class="form-btn red delete_link" id="refuserBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-delete" viewBox="0 0 512 512">
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                          d="M112 112l20 320c.95 18.49 14.4 32 32 32h184c17.67 0 30.87-13.51 32-32l20-320"></path>
+                    <path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+                          d="M80 112h352"></path>
+                    <path d="M192 112V72h0a23.93 23.93 0 0124-24h80a23.93 23.93 0 0124 24h0v40M256 176v224M184 176l8 224M328 176l-8 224"
+                          fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                Refuser
+            </a>
+        </div>
+    </div>
+{% endblock %}

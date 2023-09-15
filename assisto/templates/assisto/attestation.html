@@ -1,0 +1,149 @@
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="styleSheet" href="{% static "assisto/style/attestaion_style.css" %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
+    <link rel="icon" href="{% static "assisto/img/logo_web.png" %}" />
+    <title>Attestation</title>
+    <script>
+        $(document).ready(function() {
+            $('#downloadButton').click(function() {
+                let name = "";  // Initialize the variable
+
+                {% if particulier %}
+                    name = "{{ particulier.cin_num }}";  // Assign the value if particulier is defined
+                {% endif %}
+                const element = document.getElementById('yourPageId');  // Replace 'yourPageId' with the ID of the element containing your page content
+                const opt = {
+                    margin: 0,
+                    filename: 'Attestation_agricole_' + name + '.pdf',  // Specify the desired filename
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+                };
+
+                html2pdf().set(opt).from(element).save();
+            });
+            $('#downloadButton').click();
+            window.close();
+        });
+    </script>
+</head>
+
+<body id="yourPageId">
+    <button id="downloadButton">Download as PDF</button>
+    <div id="content">
+        <header class="attestation_header">
+            <p class="title-fr">CHAMBRE D'AGRICULTURE DE LA REGION DE L'ORIENTAL</p>
+            <img src="{% static "assisto/img/cagor_logo.png" %}" alt="logo" class="cagor-logo">
+            <p class="title-ar">الغرفة الفلاحية لجهة الشرق </p>
+        </header>
+        <main>
+            <h1 class="attestation-title">Attestation agricole - <span class="ar">شهادة فلاحية</span></h1>
+            <div class="page-header">
+                {% if particulier %}
+                <div class="page-group">
+                    <span>La Chambre d'Agriculture certifie que monsieur:</span> <span class="ar">تشهد الغرفة الفلاحية أن السيد : </span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Numéro de CIN :</span> <span class="data">{{ particulier.cin_num|upper }}</span> <span class="ar gp_2">رقم بطاقة التعريف الوطنية :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Nom :</span> <span class="data">{{ particulier.cin_num.user_nom|upper }}</span> <span class="ar gp_2">الإسم العائلي :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Prénom :</span> <span class="data">{{ particulier.prenom|upper }}</span> <span class="ar gp_2">الإسم الشخصي :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Télephone :</span> <span class="data">{{ particulier.cin_num.user_tel }}</span> <span class="ar gp_2">رقم الهاتف :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Province :</span> <span class="data">{{ particulier.cin_num.province|upper }}</span> <span class="ar gp_2">المقاطعة :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Adresse :</span> <span class="data">{{ particulier.adresse|upper }}</span> <span class="ar gp_2">العنوان :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Type de profession :</span> <span class="data">{{ particulier.cin_num.profession|upper }}</span> <span class="ar gp_2">المهنة :</span>
+                </div>
+                {% elif cooperative %}
+                <div class="page-group">
+                    <span>La Chambre d'Agriculture certifie que la coopérative:</span> <span class="ar">تشهد الغرفة الفلاحية أن التعاونية : </span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Numéro de CNC :</span> <span class="data">{{ cooperative.cnc_num|upper }}</span> <span class="ar gp_2">الرقم الوطني للتعاونية :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Nom et prénom du président :</span> <span class="data">{{ cooperative.cnc_num.user_nom|upper }}</span> <span class="ar gp_2">الإسم الكامل لرئيس التعاونية :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Télephone :</span> <span class="data">{{ cooperative.cnc_num.user_tel }}</span> <span class="ar gp_2">رقم الهاتف :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Adresse e-mail :</span> <span class="data">{{ cooperative.cnc_num.user_tel }}</span> <span class="ar gp_2">البريد الإلكتروني :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Province :</span> <span class="data">{{ cooperative.cnc_num.province|upper }}</span> <span class="ar gp_2">المقاطعة :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Commune :</span> <span class="data">{{ cooperative.cnc_num.commune|upper }}</span> <span class="ar gp_2">الجماعة :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Type de profession :</span> <span class="data">{{ cooperative.cnc_num.profession|upper }}</span> <span class="ar gp_2">المهنة :</span>
+                </div>
+                {% elif societe %}
+                <div class="page-group">
+                    <span>La Chambre d'Agriculture certifie que la société:</span> <span class="ar">تشهد الغرفة الفلاحية أن الشركة : </span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Numéro de Registre de Commerce :</span> <span class="data">{{ societe.rc_num|upper }}</span> <span class="ar gp_2">الرقم السجل التجاري :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Nom et prénom du gérant :</span> <span class="data">{{ societe.rc_num.user_nom|upper }}</span> <span class="ar gp_2">الإسم الكامل للمسير :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Télephone :</span> <span class="data">{{ societe.rc_num.user_tel }}</span> <span class="ar gp_2">رقم الهاتف :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Adresse e-mail :</span> <span class="data">{{ societe.rc_num.user_tel }}</span> <span class="ar gp_2">البريد الإلكتروني :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Province :</span> <span class="data">{{ societe.rc_num.province|upper }}</span> <span class="ar gp_2">المقاطعة :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Commune :</span> <span class="data">{{ societe.rc_num.commune|upper }}</span> <span class="ar gp_2">الجماعة :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Type de profession :</span> <span class="data">{{ societe.rc_num.profession|upper }}</span> <span class="ar gp_2">المهنة :</span>
+                </div>
+
+                {% endif %}
+                <div class="page-group">
+                    <span>Exerce la profession agricole :</span> <span class="ar">يمارس مهنة الفلاحة :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">La date de délivrance du certificat :</span> <span class="data">{{ current_date|date:"d/m/Y" }}</span> <span class="ar gp_2">تاريخ تسليم الشهادة :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Période de validité du certificat :</span> <span class="data">6 Mois</span> <span class="ar gp_2">مدة صلاحية الشهادة :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">N° de référence :</span> <span class="data">{{att_code}}</span> <span class="ar gp_2"> الرقم المرجعي :</span>
+                </div>
+                <div class="page-group_1">
+                    <span class="gp_1">Fait le :</span> <span class="data">{{ current_date|date:"d/m/Y H:i" }}</span> <span class="ar gp_2">حرر بتاريخ :</span>
+                </div>
+                <div class="Qr_div">
+                    <img class="Qr_code" src="data:image/png;base64,{{ qr_image_buffer|to_base64 }}" alt="QR Code">
+
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

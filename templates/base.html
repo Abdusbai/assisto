@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static "assisto/img/logo_web.png" %}" />
+    {% block logo %} {% endblock %}
+    <link rel="apple-touch-icon" href="{% static "assisto/img/apple-icon.png" %}" />
+    <meta name="description" content="Assisto, le chatbot de la Chambre d'Agriculture de la Région de l'Oriental">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <!--<script src="{% static "jQueryLibrary.js" %}"></script>-->
+    {% block css_files %} {% endblock %}
+    <link rel="stylesheet" href="{% static "query.css" %}">
+    {% block title %}{% endblock %}
+</head>
+<body>
+<script>
+    
+</script>
+{% block content %}{% endblock %}
+
+{% block scripts %}{% endblock %}
+</body>
+</html>

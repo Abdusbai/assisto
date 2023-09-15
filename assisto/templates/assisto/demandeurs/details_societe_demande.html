@@ -1,0 +1,167 @@
+{% extends "home.html" %}
+{% load static %}
+{% block right_content %}
+    <div class="page-header">
+        <div>
+            <h1 class="Header-primary">Détails</h1>
+            <p class="Header-navigation"><a href="{% url "dashboard" %}">Accueil</a>&nbsp; / &nbsp;<a
+                    href="{% url "cooperative" %}">Société</a>&nbsp; / &nbsp;Détails</p>
+        </div>
+    </div>
+    <div class="page-content">
+        <div class="page-content-group">
+            <span class="group-title">Informations personnelles et coordonnées :</span>
+            <div class="gro-info">
+                <span class="title-sm">N° RC :</span>
+                <span class="info">{{ societe.rc_num|upper }}</span>
+            </div>
+            <div class="gro-info">
+                <span class="title-sm">N° RC (PDF) :</span>
+                <a href="/static/uploads{{ societe.rc_pdf.url }}" class="info" target="_blank">Afficher le PDF</a>
+            </div>
+            <div class="gro-info">
+                <span class="title-sm">Nom :</span>
+                <span class="info">{{ societe.rc_num.user_nom|upper }}</span>
+            </div>
+            <div class="gro-info">
+                <span class="title-sm">Nom et prénom du gérant :</span>
+                <span class="info">{{ societe.nom_gerant|upper }}</span>
+            </div>
+            <div class="gro-info">
+                <span class="title-sm">Téléphone :</span>
+                <span class="info">{{ societe.rc_num.user_tel }}</span>
+            </div>
+            <div class="gro-info">
+                <span class="title-sm">E-mail :</span>
+                <span class="info">{{ societe.rc_num.user_email }}</span>
+            </div>
+            <div class="gro-info">
+                <span class="title-sm">Province :</span>
+                <span class="info">{{ societe.rc_num.commune.province|upper }}</span>
+            </div>
+            <div class="gro-info">
+                <span class="title-sm">Commune :</span>
+                <span class="info">{{ societe.rc_num.commune|upper }}</span>
+            </div>
+
+        </div>
+        <div class="page-content-group">
+            <span class="group-title">Activités professionnelles :</span>
+            {% if societe.rc_num.profession %}
+                <div class="gro-info">
+                    <span class="title-sm">Type de profession :</span>
+                    <span class="info">{{ societe.rc_num.profession|upper }}</span>
+                </div>
+            {% endif %}
+
+            {% if societe.rc_num.proof %}
+                <div class="gro-info">
+                    <span class="title-sm">Justificatif disponible :</span>
+                    <span class="info">{{ societe.rc_num.proof|upper }}</span>
+                </div>
+            {% endif %}
+
+            {% if pdf_file %}
+                <div class="gro-info">
+                    <span class="title-sm">Justificatif disponible (PDF) :</span>
+                    <a href="/static/uploads{{ pdf_file }}" class="info" target="_blank">Afficher le PDF</a>
+                </div>
+            {% endif %}
+
+            {% if num_tf %}
+                <div class="gro-info">
+                    <span class="title-sm">N° du titre foncier (T.F) :</span>
+                    <span class="info">{{ num_tf|upper }}</span>
+                </div>
+            {% endif %}
+
+            {% if num_refe %}
+                <div class="gro-info">
+                    <span class="title-sm">N° de référence :</span>
+                    <span class="info">{{ num_refe|upper }}</span>
+                </div>
+            {% endif %}
+
+            {% if p_date %}
+                <div class="gro-info">
+                    <span class="title-sm">Date :</span>
+                    <span class="info">{{ p_date|date:"d/m/Y" }}</span>
+                </div>
+            {% endif %}
+
+            {% if days %}
+                <div class="gro-info">
+                    <span class="title-sm">Durée :</span>
+                    <span class="info">{{ days }} jours</span>
+                </div>
+            {% endif %}
+
+            {% if nom %}
+                <div class="gro-info">
+                    <span class="title-sm">Nom :</span>
+                    <span class="info">{{ nom|upper }}</span>
+                </div>
+            {% endif %}
+
+            {% if nom_prenom_president %}
+                <div class="gro-info">
+                    <span class="title-sm">Nom complet du président de la coopérative :</span>
+                    <span class="info">{{ nom_prenom_president|upper }}</span>
+                </div>
+            {% endif %}
+
+            {% if tele %}
+                <div class="gro-info">
+                    <span class="title-sm">Téléphone :</span>
+                    <span class="info">{{ tele }}</span>
+                </div>
+            {% endif %}
+
+            {% if email %}
+                <div class="gro-info">
+                    <span class="title-sm">E-mail :</span>
+                    <span class="info">{{ email|upper }}</span>
+                </div>
+            {% endif %}
+
+            {% if province %}
+                <div class="gro-info">
+                    <span class="title-sm">Province :</span>
+                    <span class="info">{{ province|upper }}</span>
+                </div>
+            {% endif %}
+
+            {% if commune %}
+                <div class="gro-info">
+                    <span class="title-sm">Commune :</span>
+                    <span class="info">{{ commune|upper }}</span>
+                </div>
+            {% endif %}
+        </div>
+        <div class="page-content-group">
+            <span class="group-title">Attestation agricole :</span>
+                {% for dm in demande%}
+                    {% if dm.code_attestation %}
+                        <div class="gro-info">
+                            <span class="title-sm">N° de référence :</span>
+                                <span class="info">{{dm.code_attestation}}</span>
+                        </div>
+                    {% endif %}
+
+                    {% if dm.datetime %}
+                        <div class="gro-info">
+                            <span class="title-sm">La date de délivrance du certificat :</span>
+                                <span class="info">{{ dm.datetime|date:"d/m/Y" }} {{ dm.datetime|time:"H:i" }}</span>
+                        </div>
+                    {% endif %}
+
+                    {% if dm.datetime %}
+                        <div class="gro-info">
+                            <span class="title-sm">Période de validité du certificat :</span>
+                                <span class="info">6 Mois</span>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+        </div>
+    </div>
+{% endblock %}

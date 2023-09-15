@@ -1,0 +1,111 @@
+{% extends "home.html" %}
+{% load static %}
+{% block title %}
+    <title>Assisto</title>
+{% endblock %}
+
+
+{% block right_content %}
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <span {% if message.tags %} class="{{ message.tags }}"{% endif %}> {{ message }} </span>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <div class="page-header">
+        <div>
+            <h1 class="Header-primary">Particulier</h1>
+            <p class="Header-navigation"><a href="{% url "dashboard" %}">Accueil</a>&nbsp; / &nbsp;Particulier</p>
+        </div>
+        <form method="GET" class="form-search">
+            <input type="text" class="input-search" name="search" placeholder="Recherche par N° CIN">
+            <button type="submit" class="submit-search">Recherche</button>
+        </form>
+    </div>
+
+    <table class="table sortable">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            {% if demande %}
+            <th scope="col">Date de demande</th>
+            {% endif %}
+            <th scope="col">CIN</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Date de naissance</th>
+            <th scope="col">Téléphone</th>
+            <th scope="col">Province</th>
+            <th scope="col">Profession</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for particulier in page_obj %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                {% if demande %}
+                    {% for date in particulier.cin_num.demandes_set.all %}
+                        <td>{{ date.datetime|date:"d/m/Y" }} {{ date.datetime|time:"H:i" }}</td>
+                    {% endfor %}
+                {% endif %}
+                <td>{{ particulier.cin_num|upper }}</td>
+                <td>{{ particulier.cin_num.user_nom|upper }}</td>
+                <td>{{ particulier.prenom|upper }}</td>
+                <td>{{ particulier.date_naissance|date:'d/m/Y' }}</td>
+                <td>{{ particulier.cin_num.user_tel }}</td>
+                <td>{{ particulier.province|upper }}</td>
+                <td>{{ particulier.cin_num.profession|upper }}</td>
+                {% if demande %}
+                    <td>
+                        <a class="link" href="{% url "particulier_demande_details" particulier.cin_num %}">Plus</a>
+                    </td>
+                {% else %}
+                    <td>
+                        <a class="link" href="{% url "particulier_details" particulier.cin_num %}">Plus</a>
+                    </td>
+                {% endif %}
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <span class="step-links">
+    {% if page_obj.has_previous %}
+        <a href="?page=1">Premier</a>
+        <a href="?page={{ page_obj.previous_page_number }}"> < </a>
+    {% endif %}
+
+        {% if page_obj.number|add:'-2' > 1 %}
+            <a href="?page=1">1</a>
+            {% if page_obj.number|add:'-3' > 1 %}
+                <span class="dots">..</span>
+            {% endif %}
+        {% endif %}
+
+        {% for i in page_obj.paginator.page_range %}
+            {% if i > page_obj.number|add:'-4' and i < page_obj.number|add:'3' %}
+                {% if i == page_obj.number %}
+                    <span class="current-page">{{ i }}</span>
+                {% else %}
+                    <a href="?page={{ i }}">{{ i }}</a>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.paginator.num_pages > page_obj.number|add:'2' %}
+            {% if page_obj.paginator.num_pages > page_obj.number|add:'3' %}
+                <span class="dots">..</span>
+            {% endif %}
+            <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+        {% endif %}
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}"> ></a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Dernier</a>
+        {% endif %}
+</span>
+
+{% endblock %}
